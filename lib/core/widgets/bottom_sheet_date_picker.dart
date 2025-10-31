@@ -1,3 +1,5 @@
+import 'package:carcirus/core/resources/app_asset.dart';
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetDatePicker extends StatefulWidget {
@@ -16,7 +18,7 @@ class BottomSheetDatePicker extends StatefulWidget {
 
 class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
   late DateTime _visibleMonth;
-  late DateTime _selectedDate;
+  late DateTime? _selectedDate;
   final DateTime _today = DateTime.now();
 
   @override
@@ -29,6 +31,7 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
   void _changeMonth(int offset) {
     setState(() {
       _visibleMonth = DateTime(_visibleMonth.year, _visibleMonth.month + offset);
+      _selectedDate = null;
     });
   }
 
@@ -77,21 +80,21 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
       }
 
       final isPast = date.isBefore(DateTime(_today.year, _today.month, _today.day));
-      final isSelected = date.year == _selectedDate.year &&
-          date.month == _selectedDate.month &&
-          date.day == _selectedDate.day;
+      final isSelected = date.year == _selectedDate?.year &&
+          date.month == _selectedDate?.month &&
+          date.day == _selectedDate?.day;
 
       // determine color
       Color textColor;
       if (!isCurrentMonth) {
-        textColor = Colors.grey.shade300; // other month = light gray
+        textColor = AppColors.disableGray; // other month = light gray
       } else if (isPast) {
-        textColor = Colors.grey.shade300; // past in same month = darker gray
+        textColor = AppColors.disableGray; // past in same month = darker gray
       } else {
-        textColor = isSelected ? Colors.white : Colors.black87;
+        textColor = isSelected ? AppColors.white : AppColors.textBlack;
       }
 
-      final bgColor = isSelected ? Colors.green[400] : Colors.transparent;
+      final bgColor = isSelected ? AppColors.primaryGreen : Colors.transparent;
 
       days.add(
         GestureDetector(
@@ -113,6 +116,7 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
               style: TextStyle(
                 color: textColor,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 16.75
               ),
             ),
           ),
@@ -133,7 +137,7 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,48 +146,80 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Image.asset(
+                    AppAssets.imgClose,
+                    width: 15,
+                    height: 15,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16), // geser 16px ke kanan
+                  padding: const EdgeInsets.only(left: 0, top: 16),
                   child: Text(
                     "Pick-up Date",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 28),
             // Month navigation
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () => _changeMonth(-1),
-                  icon: const Icon(Icons.chevron_left),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.borderGray),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => _changeMonth(-1),
+                      child: Image.asset(
+                        AppAssets.imgLeftArrow,
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Text(
+                      monthTitle.toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => _changeMonth(1),
+                      child: Image.asset(
+                        AppAssets.imgRightArrow,
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  monthTitle.toUpperCase(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  onPressed: () => _changeMonth(1),
-                  icon: const Icon(Icons.chevron_right),
-                ),
-              ],
+              )
             ),
-
-            const SizedBox(height: 8),
-
+            const SizedBox(height: 24),
             // Weekdays
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Text("Su"), Text("Mo"), Text("Tu"),
-                Text("We"), Text("Th"), Text("Fr"), Text("Sa"),
-              ],
+              children: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+                  .map((day) => Text(
+                day,
+                style: TextStyle(
+                    fontSize: 16.75,
+                    color: AppColors.textBlack,
+                    fontWeight: FontWeight.w500
+                ),
+              ))
+                  .toList(),
             ),
             const SizedBox(height: 8),
 
@@ -197,26 +233,32 @@ class _BottomSheetDatePickerState extends State<BottomSheetDatePicker> {
               children: _buildDays(),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 32),
 
             // Apply button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[400],
+                  backgroundColor: AppColors.primaryGreen,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 onPressed: () {
-                  widget.onDateSelected(_selectedDate);
-                  Navigator.pop(context);
+                  if (_selectedDate != null) {
+                    widget.onDateSelected(_selectedDate!);
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text(
                   "Apply",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                  ),
                 ),
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:carcirus/core/resources/app_asset.dart';
 import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:carcirus/core/widgets/bottom_sheet_date_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../core/widgets/app_button.dart';
 import '../widgets/date_time_picker.dart';
 import '../widgets/rent_benefit_item.dart';
@@ -41,7 +42,7 @@ class _RentScreen extends State<RentScreen> {
 
     final formattedDate = _selectedDate == null
         ? 'Select date'
-        : "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}";
+        : DateFormat('MMM d, EEEE').format(_selectedDate!);
 
     final benefits = [
       RentBenefitItemData(

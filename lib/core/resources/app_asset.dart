@@ -16,4 +16,7 @@ class AppAssets {
   static const String imgMyCar = "${rootImage}ic_my_car.png";
   static const String imgMyBills = "${rootImage}ic_my_bills.png";
   static const String imgProfile = "${rootImage}ic_profile.png";
+  static const String imgLeftArrow = "${rootImage}ic_left_arrow.png";
+  static const String imgRightArrow = "${rootImage}ic_right_arrow.png";
+  static const String imgClose = "${rootImage}ic_close_arrow.png";
 }

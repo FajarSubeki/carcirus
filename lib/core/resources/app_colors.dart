@@ -9,9 +9,11 @@ class AppColors {
   // Neutral Colors
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color textBlack = Color(0xFF131313);
   static const Color gray = Color(0xFF9E9E9E);
   static const Color lightGray = Color(0xFFA6A6A6);
   static const Color borderGray = Color(0xFFCCCBCB);
+  static const Color disableGray = Color(0xFFB5B3B3);
 
   // Text Colors
   static const Color textPrimary = Color(0xFF0F172A);
