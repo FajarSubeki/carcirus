@@ -1,3 +1,4 @@
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class HowToRentItem extends StatelessWidget {
@@ -14,36 +15,61 @@ class HowToRentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 14,
-              backgroundColor: Colors.green,
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.borderGray),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      constraints: const BoxConstraints(
+        maxWidth: 241, // lebar maksimum container
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // biar Column nggak ambil seluruh tinggi
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: AppColors.primaryGreen,
+            child: Padding(
+              padding: const EdgeInsets.all(2),
               child: Text(
                 '$step',
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-            const SizedBox(height: 4),
-            Text(
-              desc,
-              style: const TextStyle(color: Colors.black54, fontSize: 12),
+          ),
+          const SizedBox(height: 13),
+          Text(
+            title,
+            style: const TextStyle(
+              color: AppColors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 6),
+          Flexible(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 241,
+              ),
+              child: Text(
+                desc,
+                style: TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+

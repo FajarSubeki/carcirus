@@ -1,3 +1,5 @@
+import 'package:carcirus/core/resources/app_asset.dart';
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:carcirus/features/rent/presentation/bill_screen.dart';
 import 'package:carcirus/features/rent/presentation/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,29 +27,51 @@ class _MainNavigationState extends State<MainNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (i) => setState(() => _selectedIndex = i),
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: 'Rent',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              color: AppColors.borderGray,
+              width: 0.5,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.car_repair),
-            label: 'My Car',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
-            label: 'My Bills',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (i) => setState(() => _selectedIndex = i),
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: AppColors.white,
+          selectedItemColor: AppColors.primaryGreen,
+          unselectedItemColor: AppColors.lightGray,
+          showUnselectedLabels: true,
+          items: [
+            _buildNavItem(AppAssets.imgRent, 'Rent', 0),
+            _buildNavItem(AppAssets.imgMyCar, 'My Car', 1),
+            _buildNavItem(AppAssets.imgMyBills, 'My Bills', 2),
+            _buildNavItem(AppAssets.imgProfile, 'Profile', 3),
+          ],
+        ),
       ),
     );
   }
+
+  BottomNavigationBarItem _buildNavItem(String path, String label, int index) {
+    bool isSelected = _selectedIndex == index;
+    return BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Image.asset(
+          path,
+          width: 24,
+          height: 24,
+          color: isSelected ? AppColors.primaryGreen : AppColors.lightGray,
+        ),
+      ),
+      label: label,
+      tooltip: '',
+    );
+  }
+
 }

@@ -1,4 +1,4 @@
-import 'package:carcirus/core/theme/app_colors.dart';
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {

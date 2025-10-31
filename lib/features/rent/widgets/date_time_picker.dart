@@ -1,39 +1,64 @@
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DateTimePicker extends StatelessWidget {
   final String label;
   final String value;
-  final IconData icon;
+  final String iconPath;
+  final VoidCallback? onTap;
 
   const DateTimePicker({
     super.key,
     required this.label,
     required this.value,
-    required this.icon,
+    required this.iconPath,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-        const SizedBox(height: 6),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(8),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+              label,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                  fontSize: 14
+              )
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(value, style: const TextStyle(fontSize: 16)),
-              Icon(icon, color: Colors.grey),
-            ],
+          const SizedBox(height: 6),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(value,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textPrimary
+                    )
+                ),
+                Image.asset(
+                  iconPath,
+                  width: 15,
+                  height: 15,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
+
