@@ -48,7 +48,12 @@ CarCircus is structured using **Clean Architecture**, ensuring:
 </div>
 <br/>
 <div align="center">
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/calendar.png" width="30%" />&nbsp;&nbsp;
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/timepicker.png" width="30%" />&nbsp;&nbsp;
   <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/pic_car_selected.png" width="30%" />&nbsp;&nbsp;
+</div>
+<br/>
+<div align="center">
   <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/succes_booking.png" width="30%" />&nbsp;&nbsp;
   <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/already_book.png" width="30%" />
 </div>
