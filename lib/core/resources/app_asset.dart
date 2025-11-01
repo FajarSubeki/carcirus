@@ -4,6 +4,9 @@ class AppAssets {
 
   // images
   static const String imgAppLogo = "${rootImage}app_logo.png";
+  static const String imgNissanSentra = "${rootImage}img_nissan_sentra.png";
+  static const String imgToyotaPrius = "${rootImage}img_toyota_prius.png";
+  static const String imgNissanPath = "${rootImage}img_nissan_path.png";
 
   // icons
   static const String imgReason1 = "${rootImage}reason_1.png";

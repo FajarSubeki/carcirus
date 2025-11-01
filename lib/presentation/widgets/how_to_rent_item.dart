@@ -22,11 +22,11 @@ class HowToRentItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       constraints: const BoxConstraints(
-        maxWidth: 241, // lebar maksimum container
+        maxWidth: 241,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // biar Column nggak ambil seluruh tinggi
+        mainAxisSize: MainAxisSize.min,
         children: [
           CircleAvatar(
             radius: 16,

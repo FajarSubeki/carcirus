@@ -1,13 +1,14 @@
 import 'package:carcirus/core/resources/app_asset.dart';
 import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:carcirus/core/widgets/bottom_sheet_date_picker.dart';
+import 'package:carcirus/core/widgets/bottom_sheet_time_picker.dart';
+import 'package:carcirus/data/rent_benefit_model.dart';
+import 'package:carcirus/core/widgets/date_time_picker.dart';
+import 'package:carcirus/presentation/widgets/how_to_rent_item.dart';
+import 'package:carcirus/presentation/widgets/rent_benefit_item.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../core/widgets/app_button.dart';
-import '../widgets/date_time_picker.dart';
-import '../widgets/rent_benefit_item.dart';
-import '../widgets/how_to_rent_item.dart';
-
+import '../../../../core/widgets/app_button.dart';
 class RentScreen extends StatefulWidget {
   const RentScreen({super.key});
 
@@ -18,6 +19,7 @@ class RentScreen extends StatefulWidget {
 class _RentScreen extends State<RentScreen> {
 
   DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
 
   void _showDatePicker() {
     showModalBottomSheet(
@@ -35,6 +37,33 @@ class _RentScreen extends State<RentScreen> {
         );
       },
     );
+  }
+
+  void _showTimePicker(BuildContext context) async {
+    final time = await showModalBottomSheet<TimeOfDay>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => BottomSheetTimePicker(
+        initialTime: _selectedTime ?? TimeOfDay.now(),
+      ),
+    );
+
+    if (time != null) {
+      setState(() {
+        _selectedTime = time;
+      });
+    }
+  }
+
+  String get formattedTime {
+    if (_selectedTime == null) return 'Select time';
+
+    final hour = _selectedTime!.hourOfPeriod.toString().padLeft(2, '0');
+    final minute = _selectedTime!.minute.toString().padLeft(2, '0');
+    final period = _selectedTime!.period == DayPeriod.am ? 'AM' : 'PM';
+
+    return "$hour.$minute $period";
   }
 
   @override
@@ -145,10 +174,11 @@ class _RentScreen extends State<RentScreen> {
                           onTap: _showDatePicker,
                         ),
                         const SizedBox(height: 12),
-                        const DateTimePicker(
+                        DateTimePicker(
                           label: 'Pick-up time',
-                          value: '12.00 AM',
+                          value: formattedTime,
                           iconPath: AppAssets.imgTime,
+                          onTap: () => _showTimePicker(context),
                         ),
                         const SizedBox(height: 12),
                         AppButton(

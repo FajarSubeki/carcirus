@@ -1,10 +1,10 @@
 import 'package:carcirus/core/resources/app_asset.dart';
 import 'package:carcirus/core/resources/app_colors.dart';
-import 'package:carcirus/features/rent/presentation/bill_screen.dart';
-import 'package:carcirus/features/rent/presentation/profile_screen.dart';
+import 'package:carcirus/presentation/screen/bill_screen.dart';
+import 'package:carcirus/presentation/screen/car_screen.dart';
+import 'package:carcirus/presentation/screen/profile_screen.dart';
+import 'package:carcirus/presentation/screen/rent_screen.dart';
 import 'package:flutter/material.dart';
-import '../features/rent/presentation/car_screen.dart';
-import '../features/rent/presentation/rent_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
