@@ -22,4 +22,7 @@ class AppAssets {
   static const String imgLeftArrow = "${rootImage}ic_left_arrow.png";
   static const String imgRightArrow = "${rootImage}ic_right_arrow.png";
   static const String imgClose = "${rootImage}ic_close_arrow.png";
+  static const String imgBack = "${rootImage}ic_back.png";
+  static const String imgBookingSuccess = "${rootImage}ic_booking_succes.png";
+  static const String imgCarBooked = "${rootImage}ic_car_booked.png";
 }

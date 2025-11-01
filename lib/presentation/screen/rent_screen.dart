@@ -2,8 +2,10 @@ import 'package:carcirus/core/resources/app_asset.dart';
 import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:carcirus/core/widgets/bottom_sheet_date_picker.dart';
 import 'package:carcirus/core/widgets/bottom_sheet_time_picker.dart';
+import 'package:carcirus/core/widgets/custom_popup_dialog.dart';
 import 'package:carcirus/data/rent_benefit_model.dart';
 import 'package:carcirus/core/widgets/date_time_picker.dart';
+import 'package:carcirus/presentation/screen/pick_car_screen.dart';
 import 'package:carcirus/presentation/widgets/how_to_rent_item.dart';
 import 'package:carcirus/presentation/widgets/rent_benefit_item.dart';
 import 'package:flutter/material.dart';
@@ -183,8 +185,48 @@ class _RentScreen extends State<RentScreen> {
                         const SizedBox(height: 12),
                         AppButton(
                           text: 'Select My Car',
-                          onPressed: () {},
+                          onPressed: () async {
+                            final selectedCar = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PickCarScreen(),
+                              ),
+                            );
+                            if (!context.mounted) return;
+                            if (selectedCar != null) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (_) => CustomPopupDialog(
+                                  iconPath: AppAssets.imgBookingSuccess,
+                                  title: "Your booking has created!",
+                                  description:
+                                  "Our team will checking available car and assign it to you",
+                                  primaryText: "See booking",
+                                  secondaryText: "Cancel",
+                                  onPrimaryPressed: () {
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => CustomPopupDialog(
+                                        iconPath: AppAssets.imgCarBooked,
+                                        title: "You have book or active car rental",
+                                        description:
+                                        "Please complete your current rental before booking a new one",
+                                        primaryText: "Back",
+                                        onPrimaryPressed: () => Navigator.pop(context),
+                                      ),
+                                    );
+
+                                  },
+                                  onSecondaryPressed: () => Navigator.pop(context),
+                                ),
+                              );
+
+                            }
+                          },
                         ),
+
                       ],
                     ),
                   ),
