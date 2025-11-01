@@ -42,15 +42,15 @@ CarCircus is structured using **Clean Architecture**, ensuring:
 ## 🖼️ Screenshots
 
 <div align="center">
-  <img src="assets/screenshots/home.png" width="30%" />
-  <img src="assets/screenshots/date_picker.png" width="30%" />
-  <img src="assets/screenshots/time_picker.png" width="30%" />
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/home.png" width="30%" />&nbsp;&nbsp;
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/home_select_time.png" width="30%" />&nbsp;&nbsp;
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/pick_car.png" width="30%" />
 </div>
-
+<br/>
 <div align="center">
-  <img src="assets/screenshots/pick_car.png" width="30%" />
-  <img src="assets/screenshots/popup_success.png" width="30%" />
-  <img src="assets/screenshots/popup_warning.png" width="30%" />
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/pic_car_selected.png" width="30%" />&nbsp;&nbsp;
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/succes_booking.png" width="30%" />&nbsp;&nbsp;
+  <img src="https://github.com/FajarSubeki/carcirus/blob/main/assets/screenshoots/already_book.png" width="30%" />
 </div>
 
 ## 🛠️ Tech Stack
