@@ -59,3 +59,9 @@ CarCircus is structured using **Clean Architecture**, ensuring:
 - **Clean Architecture Pattern**
 - **Cupertino Widgets**
 - **Custom Reusable UI Components**
+
+## 📥 Download APK
+
+You can directly install the latest version of the app using the link below:
+
+👉 **[Download CarCircus APK (Google Drive)](https://drive.google.com/file/d/1jXZsdHdbMwqX0v2pQAK-YFpBF340r2bn/view?usp=sharing)**
