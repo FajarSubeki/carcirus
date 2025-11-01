@@ -1,3 +1,4 @@
+import 'package:carcirus/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -5,14 +6,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        // Widget di tengah layar
         child: Text(
           'ProfileScreen',
           style: TextStyle(
-            // Teks diatur menjadi putih
-            color: Colors.white,
+            color: AppColors.black,
             fontSize: 28,
             fontWeight: FontWeight.bold,
           ),

@@ -33,7 +33,7 @@ class _PickCarScreenState extends State<PickCarScreen> {
       description: "Nissan Pathfinder Or Similar",
       price: "\$400",
       imagePath: AppAssets.imgNissanPath,
-    ),
+    )
   ];
 
   @override
@@ -56,29 +56,25 @@ class _PickCarScreenState extends State<PickCarScreen> {
                     car: car,
                     isSelected: selectedIndex == index,
                     onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
+                      setState(() => selectedIndex = index);
                     },
                   );
                 },
               ),
             ),
+            const SizedBox(height: 12),
+            AppButton(
+              text: 'Book Now',
+              enabled: selectedIndex != null,
+              onPressed: () {
+                if (selectedIndex != null) {
+                  final selectedCar = cars[selectedIndex!];
+                  Navigator.pop(context, selectedCar);
+                }
+              },
+            ),
+            const SizedBox(height: 16),
           ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-        child: AppButton(
-          text: 'Book Now',
-          enabled: selectedIndex != null,
-          onPressed: () {
-            if (selectedIndex != null) {
-              final selectedCar = cars[selectedIndex!];
-              Navigator.pop(context, selectedCar);
-            }
-          }
         ),
       ),
     );

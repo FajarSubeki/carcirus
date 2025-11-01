@@ -110,7 +110,6 @@ class _RentScreen extends State<RentScreen> {
     ];
 
     return Scaffold(
-      // 1. Scaffold background diatur ke putih, ini akan menjadi warna bagian bawah
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.primaryBlue,
@@ -130,117 +129,132 @@ class _RentScreen extends State<RentScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            Container(
-              width: double.infinity,
-              color: AppColors.primaryBlue,
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(
+              height: 380,
+              child: Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  // Teks diubah warnanya menjadi putih agar kontras
-                  const Text(
-                    'Looking for a car rental?',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // <-- Ubah ke Putih
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    "Book now and enjoy 10% off your first week's rental!",
-                    style: TextStyle(color: Colors.white70), // <-- Ubah ke Putih Muda
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Container untuk DateTimePicker tetap Putih
                   Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
+                    width: double.infinity,
+                    height: 225,
+                    color: AppColors.primaryBlue,
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 24),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Looking for a car rental?',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "Book now and enjoy 10% off your first\nweek's rental!",
+                          style: TextStyle(
+                            color: AppColors.white2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
-                    child: Column(
-                      children: [
-                        DateTimePicker(
-                          label: 'Pick-up date',
-                          value: formattedDate,
-                          iconPath: AppAssets.imgCalendar,
-                          onTap: _showDatePicker,
-                        ),
-                        const SizedBox(height: 12),
-                        DateTimePicker(
-                          label: 'Pick-up time',
-                          value: formattedTime,
-                          iconPath: AppAssets.imgTime,
-                          onTap: () => _showTimePicker(context),
-                        ),
-                        const SizedBox(height: 12),
-                        AppButton(
-                          text: 'Select My Car',
-                          onPressed: () async {
-                            final selectedCar = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PickCarScreen(),
-                              ),
-                            );
-                            if (!context.mounted) return;
-                            if (selectedCar != null) {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (_) => CustomPopupDialog(
-                                  iconPath: AppAssets.imgBookingSuccess,
-                                  title: "Your booking has created!",
-                                  description:
-                                  "Our team will checking available car and assign it to you",
-                                  primaryText: "See booking",
-                                  secondaryText: "Cancel",
-                                  onPrimaryPressed: () {
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => CustomPopupDialog(
-                                        iconPath: AppAssets.imgCarBooked,
-                                        title: "You have book or active car rental",
-                                        description:
-                                        "Please complete your current rental before booking a new one",
-                                        primaryText: "Back",
-                                        onPrimaryPressed: () => Navigator.pop(context),
-                                      ),
-                                    );
+                  ),
 
-                                  },
-                                  onSecondaryPressed: () => Navigator.pop(context),
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    top: 110,
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 8,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          DateTimePicker(
+                            label: 'Pick-up date',
+                            value: formattedDate,
+                            iconPath: AppAssets.imgCalendar,
+                            onTap: _showDatePicker,
+                          ),
+                          const SizedBox(height: 12),
+                          DateTimePicker(
+                            label: 'Pick-up time',
+                            value: formattedTime,
+                            iconPath: AppAssets.imgTime,
+                            onTap: () {
+                              _showTimePicker(context);
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          AppButton(
+                            text: 'Select My Car',
+                            onPressed: () async {
+                              final selectedCar = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PickCarScreen(),
                                 ),
                               );
 
-                            }
-                          },
-                        ),
+                              if (!context.mounted) return;
 
-                      ],
+                              if (selectedCar != null) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => CustomPopupDialog(
+                                    iconPath: AppAssets.imgBookingSuccess,
+                                    title: "Your booking has created!",
+                                    description:
+                                    "Our team will checking available car and assign it to you",
+                                    primaryText: "See booking",
+                                    secondaryText: "Cancel",
+                                    onPrimaryPressed: () {
+                                      Navigator.pop(context);
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => CustomPopupDialog(
+                                          iconPath: AppAssets.imgCarBooked,
+                                          title: "You have book or active car rental",
+                                          description:
+                                          "Please complete your current rental before booking a new one",
+                                          primaryText: "Back",
+                                          onPrimaryPressed: () => Navigator.pop(context),
+                                        ),
+                                      );
+                                    },
+                                    onSecondaryPressed: () => Navigator.pop(context),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 24),
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: 'Why ',
                       style: TextStyle(
                         color: Colors.black,
@@ -265,10 +279,10 @@ class _RentScreen extends State<RentScreen> {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // 2 kolom
+                      crossAxisCount: 2,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
-                      childAspectRatio: 3.2, // sesuaikan proporsi agar rapi
+                      childAspectRatio: 3.2,
                     ),
                     itemCount: benefits.length,
                     itemBuilder: (context, index) {
@@ -283,9 +297,9 @@ class _RentScreen extends State<RentScreen> {
                   Text(
                     'How to rent car',
                     style: TextStyle(
-                        fontSize: 20,
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w500
+                      fontSize: 20,
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -306,12 +320,10 @@ class _RentScreen extends State<RentScreen> {
                         );
                       },
                     ),
-                  )
-
+                  ),
                 ],
               ),
-            )
-
+            ),
           ],
         ),
       ),

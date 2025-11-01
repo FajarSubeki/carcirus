@@ -1,15 +1,13 @@
 import 'package:carcirus/core/resources/app_asset.dart';
 import 'package:carcirus/core/resources/app_colors.dart';
+import 'package:carcirus/core/widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetTimePicker extends StatefulWidget {
   final TimeOfDay initialTime;
 
-  const BottomSheetTimePicker({
-    super.key,
-    required this.initialTime,
-  });
+  const BottomSheetTimePicker({super.key, required this.initialTime});
 
   @override
   State<BottomSheetTimePicker> createState() => _BottomSheetTimePickerState();
@@ -17,7 +15,7 @@ class BottomSheetTimePicker extends StatefulWidget {
 
 class _BottomSheetTimePickerState extends State<BottomSheetTimePicker> {
   final hours = List.generate(12, (i) => i + 1);
-  final minutes = [0, 30]; // hanya 00 dan 30
+  final minutes = [0, 30];
 
   late int selectedHour;
   late int selectedMinute;
@@ -52,7 +50,6 @@ class _BottomSheetTimePickerState extends State<BottomSheetTimePicker> {
     );
 
     selectedMinute = closestMinute;
-
   }
 
   @override
@@ -96,108 +93,129 @@ class _BottomSheetTimePickerState extends State<BottomSheetTimePicker> {
           // Picker Section
           SizedBox(
             height: 150,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                // Hour
-                Expanded(
-                  child: CupertinoPicker(
-                    scrollController: hourController,
-                    itemExtent: 40,
-                    onSelectedItemChanged: (index) {
-                      setState(() {
-                        selectedHour = hours[index];
-                      });
-                    },
-                    children: List.generate(hours.length, (index) {
-                      final isSelected = hours[index] == selectedHour;
-                      return Center(
-                        child: Text(
-                          hours[index].toString().padLeft(2, '0'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                            color: isSelected ? AppColors.textBlack02 : AppColors.lightGray,
-                          ),
-                        ),
-                      );
-                    }),
+                // Garis horizontal
+                Positioned(
+                  top: (150 / 2) - 20,
+                  left: 40,
+                  right: 40,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 1,
+                        color: AppColors.lightGray.withOpacity(0.4),
+                      ),
+                      const SizedBox(height: 40),
+                      Container(
+                        height: 1,
+                        color: AppColors.lightGray.withOpacity(0.4),
+                      ),
+                    ],
                   ),
                 ),
-                const Text(":", style: TextStyle(fontSize: 16)),
-                // Minute
-                Expanded(
-                  child: CupertinoPicker(
-                    scrollController: minuteController,
-                    itemExtent: 40,
-                    onSelectedItemChanged: (index) {
-                      setState(() {
-                        selectedMinute = minutes[index];
-                      });
-                    },
-                    children: List.generate(minutes.length, (index) {
-                      final isSelected = minutes[index] == selectedMinute;
-                      return Center(
-                        child: Text(
-                          minutes[index].toString().padLeft(2, '0'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                            color: isSelected
-                                ? AppColors.textBlack02
-                                : AppColors.lightGray,
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      child: CupertinoPicker(
+                        scrollController: hourController,
+                        itemExtent: 40,
+                        selectionOverlay: const SizedBox.shrink(),
+                        onSelectedItemChanged: (index) {
+                          setState(() => selectedHour = hours[index]);
+                        },
+                        children: hours.map((h) {
+                          final isSelected = h == selectedHour;
+                          return Center(
+                            child: Text(
+                              h.toString().padLeft(2, '0'),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight:
+                                isSelected ? FontWeight.w600 : FontWeight.normal,
+                                color: isSelected
+                                    ? AppColors.textBlack02
+                                    : AppColors.lightGray,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Text(":", style: TextStyle(fontSize: 16)),
+                    const SizedBox(width: 4),
+                    SizedBox(
+                      width: 60,
+                      child: CupertinoPicker(
+                        scrollController: minuteController,
+                        itemExtent: 40,
+                        selectionOverlay: const SizedBox.shrink(),
+                        onSelectedItemChanged: (index) {
+                          setState(() => selectedMinute = minutes[index]);
+                        },
+                        children: minutes.map((m) {
+                          final isSelected = m == selectedMinute;
+                          return Center(
+                            child: Text(
+                              m.toString().padLeft(2, '0'),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight:
+                                isSelected ? FontWeight.w600 : FontWeight.normal,
+                                color: isSelected
+                                    ? AppColors.textBlack02
+                                    : AppColors.lightGray,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
-                // Period
-                Expanded(
-                  child: CupertinoPicker(
-                    scrollController: periodController,
-                    itemExtent: 40,
-                    onSelectedItemChanged: (i) {
-                      setState(() {
-                        selectedPeriod = i == 0 ? "PM" : "AM";
-                      });
-                    },
-                    children: List.generate(2, (index) {
-                      final period = index == 0 ? "PM" : "AM";
-                      final isSelected = selectedPeriod == period;
 
-                      return Center(
-                        child: Text(
-                          period,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                            color: isSelected
-                                ? AppColors.textBlack02
-                                : AppColors.lightGray,
+                Positioned(
+                  right: 38,
+                  child: SizedBox(
+                    width: 60,
+                    child: CupertinoPicker(
+                      scrollController: periodController,
+                      itemExtent: 40,
+                      selectionOverlay: const SizedBox.shrink(),
+                      onSelectedItemChanged: (i) {
+                        setState(() => selectedPeriod = i == 0 ? "PM" : "AM");
+                      },
+                      children: ["PM", "AM"].map((p) {
+                        final isSelected = p == selectedPeriod;
+                        return Center(
+                          child: Text(
+                            p,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.normal,
+                              color: isSelected
+                                  ? AppColors.textBlack02
+                                  : AppColors.lightGray,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 15),
-
-          // Apply Button
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6FCF97),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-              ),
+            child: AppButton(
+              text: 'Apply',
               onPressed: () {
                 final hourIndex = hourController.selectedItem;
                 final minuteIndex = minuteController.selectedItem;
@@ -216,10 +234,6 @@ class _BottomSheetTimePickerState extends State<BottomSheetTimePicker> {
                   TimeOfDay(hour: hour, minute: minuteValue),
                 );
               },
-              child: const Text(
-                "Apply",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -228,4 +242,3 @@ class _BottomSheetTimePickerState extends State<BottomSheetTimePicker> {
     );
   }
 }
-
